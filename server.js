@@ -23,7 +23,10 @@ mongoose.connection.on('open', function (ref) {
 
 const db = mongoose.connection
 
-app.get('/', async (req, res) => {
+
+const router = express.Router();
+
+router.get('/', async (req, res) => {
     try {
       const mushrooms = await Mushroom.find({}).limit(20);
       res.render('index', {mushrooms})
@@ -34,4 +37,7 @@ app.get('/', async (req, res) => {
 
 
   
-export const handler = serverless(app);
+  app.use(`/.netlify/functions/api`, router);
+
+  module.exports = app;
+  module.exports.handler = serverless(app);
