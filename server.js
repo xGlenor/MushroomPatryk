@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const serverless = require('serverless-http')
 
 const Mushroom = require('./models/mushroom')
 
@@ -30,4 +31,7 @@ app.get('/', async (req, res) => {
       res.status(500).send(err);
     }
   });
-app.listen(5000)
+
+
+  
+export const handler = serverless(app);
